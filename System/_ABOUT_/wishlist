@@ -1,0 +1,27 @@
+AUTHORS
+
+Mark Henderson
+Pete Matsis
+
+- Expand upon or get rid of System_Request_Response_Status. If expanded, make it to either use generic response codes or REST-based ones
+
+- Create a way to define, at runtime, user groups. This should mirror the functionality found in System_Security_Access_List. 
+
+- JT-specific upload class. An abstract class with all of the basic upload functions and sub classes that extend it for specific file manipulation -- images, documents, video, etc..
+
+- System_Utilities*
+    -- Create an abstract base class for all system utilities to extend - array, string, date, etc.
+    
+- Update the Model and Db classes to a better code base that uses the SPL iterators correctly and allows for multiple database usages
+    -- Separate the database logic from the model layer
+    -- Allow models to make connections to other models through an add method
+    -- Create a database connection controller that manages multiple connections and allows for fall through database connections
+    
+- Update the logging class
+
+- Use Exceptions correct with logging and with the environment setting
+
+- Use the event object (System_Event_Controller) in more places
+    -- System_Request_Controller
+    -- System_Database_Base
+    -- System_View_Root

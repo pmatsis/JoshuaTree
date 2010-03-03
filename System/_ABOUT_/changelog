@@ -1,0 +1,106 @@
+AUTHORS
+
+Mark Henderson
+Pete Matsis
+  
+JT v0.4 
+------------------------------------------------------------------------------------------------
+ADDED
+
+- Basic file manipulation and uploading. @see System_Utility_File and System_Utility_File_Upload
+
+- Changed System_Registry_Root::[get|set]Layout to [get|set]Template. The old methods still work, but will be depreciated 
+
+- Added the ability to define the template in the route by setting a template property
+
+- Added files to the allowed type in the route definitions. Now to access file data inside of a command call $this->getData() and use the files index
+
+- Utility method in System_Request_Command_Abstract::parseHtml() that allows you to easily parse an html view file and pass arguments to it. It is a simple wrapper for a more-verbose call
+
+JT v0.3
+------------------------------------------------------------------------------------------------
+ADDED
+
+- Added an HTML print out of a caught exception on the level of the front controller
+    -- This still needs to be standardized -- a single exception class thrown throughout the system
+
+- Support for default values in url routing
+    -- When defining a route, define a variable by doing :variable . To add a default value do :variable=999
+
+- The ability to log the current request uri in the user session under $_SESSION['request_uri']. This will allow us to forward users to the requested page after login attempt. This action is set to off by default.
+	-- Any call made through the front controller is automatically logged.
+	-- Added the ability to ignore routes (urls) in the router settings. Use 'ignore' => true . These urls will not be stored in the user's session
+
+- Pre-command validations added to the routes definitions. Now requests can be validated against a captcha, token, php sessionid, loggedin, or access level.
+	Usage (example route):
+	
+	'dispose' => array(
+        'command'           => 'Command_Home_Test',
+        'response_type'     => 'html',
+		'validate'			=> '2,Token,SessionCookie,captcha'
+    )
+
+- Simple check to see if the current user is logged in or not using System_Session_Controller:isLoggedIn()
+
+- Added simple access level check - System_Session_Controller::is()
+    -- Usage:
+        if(System_Session_Controller::is('admin', 'root')){}
+
+- System_Security_Access_Level
+    -- A simple way to define access_levels at runtime. Has methods to define public access levels, return access level definitions based on access level, and get a list of defined access levels -- public, private, or all.
+
+REMOVED
+
+- With the addition of pre-command validations, the access key was removed from the routes definition. Now place a simple integer in the validate key and it will call System_Request_Validate_Access to verify against that number
+
+FIXED
+
+- Added a generic command that calls HTTP response code events
+
+- Added a hack that sorts routes by their length. This band-aids the problem of the route matching -- routes with partially similar beginnings are matched ie control_panel/business/view/1 matches control_panel, control_panel/business, and control_panel/business/view -- whichever is the last match is fired
+
+
+JT v0.2
+------------------------------------------------------------------------------------------------
+ADDED
+
+- Request/Validation classes
+    -- This group of files handles validation requests
+    
+- Registry/Configuration.php
+    -- This is the global configuration object for the project. It allows for usage of native PHP constructs to define application setting
+    
+- __ABOUT__/*
+    -- files about the project's current state
+
+- Ability to define the default asset file path for both javascript and css files using the System_Registry_Configuration object.
+	-- both paths are structured as such: [set|get]('development', 'js', 'path')
+	-- both are defaulted to /www/assets/js or css
+
+REMOVED
+
+- Controller/Interface.php
+    -- unnecessary file
+    
+- Database/Interface.php
+    -- unnecessary file
+    
+- Database/ViewWrong/*
+    -- unnecessary files
+    
+- Registry/Get.php
+    -- unnecessary file
+
+- View/Asset/
+    -- unnecessary file
+    
+- View/Exception.php
+    -- unnecessary file
+    
+- View/Helper.php
+    -- unnecessary file
+    
+- View/Helper/*
+    -- unnecessary files
+
+FIXED
